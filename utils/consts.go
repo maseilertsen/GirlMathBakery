@@ -5,6 +5,7 @@ const (
 	DBFILE = "bakes.db"
 	PORT   = ":8080"
 	ADDR   = "localhost" + PORT // TODO change when deploying
+	TOKEN  = "supersecret"      // TODO change when deploying
 )
 
 // API consts

@@ -8,6 +8,7 @@ import (
 	_ "github.com/mattn/go-sqlite3" // sqlite3
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -19,7 +20,8 @@ func main() {
 	utils.Must(utils.InitSchema(db))
 	defer utils.Must(db.Close())
 
-	http.HandleFunc(utils.BAKE, handlers.HandlePostBakery)
+	srv := handlers.NewServer(db, os.Getenv("BAKERY_TOKEN"))
+	http.HandleFunc(utils.BAKE, srv.HandlePostBakery)
 	http.HandleFunc(utils.ROOT, handlers.HandleRoot)
 
 	log.Printf("Listening on %s...", utils.ADDR)

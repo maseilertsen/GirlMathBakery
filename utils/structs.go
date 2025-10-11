@@ -1,5 +1,6 @@
 package utils
 
+// Bake request
 type BakeReq struct {
 	Item  string `json:"item"`
 	Qty   int    `json:"qty"`
