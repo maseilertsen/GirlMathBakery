@@ -1,7 +1,17 @@
 package utils
 
+// Variables
 const (
-	DbFile     = "bakes.db"
-	listenAddr = ":8080"
-	envToken   = "BAKERY_TOKEN" // not sure if i need this
+	DBFILE = "bakes.db"
+	PORT   = ":8080"
+	ADDR   = "localhost" + PORT // TODO change when deploying
+)
+
+// API consts
+const VERSION = "v1"
+
+// Endpoints
+const (
+	ROOT = "/"
+	BAKE = "/" + VERSION + "/bake/"
 )

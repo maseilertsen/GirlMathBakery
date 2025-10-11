@@ -1,0 +1,26 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go workspace
+bin/
+vendor/
+
+# Build cache / temp
+*.log
+*.tmp
+
+# OS cruft
+.DS_Store
+
+# IDE settings
+.idea/
+.vscode/
+
+# Local DB / data files
+*.db
