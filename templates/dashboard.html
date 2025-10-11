@@ -1,0 +1,48 @@
+
+<!doctype html><html><head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bakery Girl Math</title>
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; padding:1rem;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+  .card{border:1px solid #eee;border-radius:12px;padding:1rem;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  table{width:100%;border-collapse:collapse;margin-top:1rem}
+  th,td{border-bottom:1px solid #eee;padding:.6rem;text-align:left}
+  .ok{color:#0a7a0a;font-weight:700}
+</style>
+</head><body>
+<h1>Bakery "Girl Math" 🥐</h1>
+<div class="cards">
+  <div class="card"><h3>Cost if Bought</h3><div>{{printf "%.2f" .Totals.Store}} NOK</div></div>
+  <div class="card"><h3>Cost to Make</h3><div>{{printf "%.2f" .Totals.Make}} NOK</div></div>
+  <div class="card"><h3>Total Saved</h3><div class="ok">{{printf "%.2f" .Totals.Savings}} NOK</div></div>
+</div>
+
+<h2>By Item</h2>
+<table>
+  <thead><tr><th>Item</th><th>Qty</th><th>Make</th><th>Buy</th><th>Savings</th></tr></thead>
+  <tbody>
+  {{range .PerItem}}
+    <tr>
+      <td>{{.Item}}</td>
+      <td>{{.Qty}}</td>
+      <td>{{printf "%.2f" .Make}} NOK</td>
+      <td>{{printf "%.2f" .Store}} NOK</td>
+      <td><b>{{printf "%.2f" .Savings}} NOK</b></td>
+    </tr>
+  {{end}}
+  </tbody>
+</table>
+
+<h2 style="margin-top:1.5rem">Recent Bakes</h2>
+<table>
+  <thead><tr><th>When</th><th>User</th><th>Item</th><th>Qty</th></tr></thead>
+  <tbody>
+  {{range .Recent}}
+    <tr><td>{{.When}}</td><td>{{.User}}</td><td>{{.Item}}</td><td>{{.Qty}}</td></tr>
+  {{end}}
+  </tbody>
+</table>
+<p style="margin-top:1rem;color:#666">Update prices via <code>POST /seed-items</code>. Env token: <code>BAKERY_TOKEN</code>.</p>
+</body></html>
+

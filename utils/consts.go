@@ -13,6 +13,7 @@ const VERSION = "v1"
 
 // Endpoints
 const (
-	ROOT = "/"
-	BAKE = "/" + VERSION + "/bake/"
+	ROOT      = "/"
+	BAKE      = "/bake"
+	DASHBOARD = "/dashboard"
 )

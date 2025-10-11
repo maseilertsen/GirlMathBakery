@@ -3,11 +3,12 @@ package handlers
 import (
 	"GirlMathBakery/utils"
 	"fmt"
+	"log"
 	"net/http"
 )
 
 func HandleRoot(w http.ResponseWriter, r *http.Request) {
-
+	log.Println("RootHandler entered")
 	// Only handle GET requests
 	if r.Method != http.MethodGet {
 		http.Error(w, "Get only", http.StatusMethodNotAllowed)
