@@ -34,7 +34,6 @@ func (s *Server) HandlePostBakery(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Bad Token
-	// TODO fix token authentication
 	if br.Token == "" || br.Token != os.Getenv(utils.TOKEN_ENV) {
 		http.Error(w, "unauthorized", http.StatusUnauthorized)
 		return

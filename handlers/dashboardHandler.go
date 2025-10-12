@@ -26,6 +26,7 @@ func (s *Server) HandleDashboard(w http.ResponseWriter, r *http.Request) {
 		Qty  int
 	}
 	var totals struct{ Make, Store, Savings float64 }
+
 	// Compute totals
 	utils.Must(s.DB.QueryRow(`
 			SELECT
