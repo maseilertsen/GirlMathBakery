@@ -20,10 +20,11 @@ func main() {
 	utils.Must(utils.InitSchema(db))
 	defer db.Close()
 
-	srv := handlers.NewServer(db, os.Getenv("BAKERY_TOKEN"))
+	srv := handlers.NewServer(db, os.Getenv(utils.TOKEN_ENV))
 
 	http.HandleFunc(utils.BAKE, srv.HandlePostBakery)
 	http.HandleFunc(utils.DASHBOARD, srv.HandleDashboard)
+	http.HandleFunc(utils.SEED, srv.HandlerSeed)
 	http.HandleFunc(utils.ROOT, handlers.HandleRoot)
 
 	log.Printf("Listening on %s...", utils.ADDR)

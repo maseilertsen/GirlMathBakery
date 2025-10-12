@@ -3,13 +3,14 @@ package handlers
 import (
 	"GirlMathBakery/utils"
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
 	"time"
 )
 
 func (s *Server) HandlePostBakery(w http.ResponseWriter, r *http.Request) {
-
+	log.Println("HandlePostBakery Handler")
 	// Only handle POST requests
 	if r.Method != http.MethodPost {
 		http.Error(w, "POST only", http.StatusMethodNotAllowed)
@@ -23,15 +24,26 @@ func (s *Server) HandlePostBakery(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "bad json", http.StatusBadRequest)
 		return
 	}
-
-	// Bad Token
-	if br.Token == "" || br.Token != os.Getenv(utils.TOKEN) {
+	expected := os.Getenv(utils.TOKEN_ENV)
+	if expected == "" {
+		http.Error(w, "server misconfigured: missing token", http.StatusInternalServerError)
+		return
+	}
+	if br.Token != expected {
 		http.Error(w, "unauthorized", http.StatusUnauthorized)
+		return
+	}
+	// Bad Token
+	// TODO fix token authentication
+	if br.Token == "" || br.Token != os.Getenv(utils.TOKEN_ENV) {
+		http.Error(w, "unauthorized", http.StatusUnauthorized)
+		return
 	}
 
 	// Ensure quantity
 	if br.Item == "" || br.Qty <= 0 {
 		http.Error(w, "missing item/qty", http.StatusBadRequest)
+		return
 	}
 
 	// Handle missing time by time.now()
