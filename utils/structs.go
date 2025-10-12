@@ -8,3 +8,13 @@ type BakeReq struct {
 	User  string `json:"user,omitempty"`
 	Token string `json:"token"` // Secret password
 }
+
+/*DTOs*/
+
+// ItemDTO A data transfer object
+type ItemDTO struct {
+	Item      string  `json:"item"`
+	UnitCost  float64 `json:"unit_cost"`
+	UnitStore float64 `json:"unit_store"`
+	Unit      string  `json:"unit"`
+}

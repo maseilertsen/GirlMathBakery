@@ -24,7 +24,7 @@ func main() {
 
 	http.HandleFunc(utils.BAKE, srv.HandlePostBakery)
 	http.HandleFunc(utils.DASHBOARD, srv.HandleDashboard)
-	http.HandleFunc(utils.SEED, srv.HandlerSeed)
+	http.HandleFunc(utils.SEED, srv.HandleSeed)
 	http.HandleFunc(utils.ROOT, handlers.HandleRoot)
 
 	log.Printf("Listening on %s...", utils.ADDR)

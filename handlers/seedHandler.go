@@ -3,15 +3,32 @@ package handlers
 import (
 	"GirlMathBakery/utils"
 	"encoding/json"
+	"log"
 	"net/http"
 	"os"
 )
 
-func (s *Server) HandlerSeed(w http.ResponseWriter, r *http.Request) {
+// ItemDTO a data transfer object
+
+// Switch to differenciate between POST AND GET
+func (s *Server) HandleSeed(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		s.HandlerSeedGET(w, r)
+	case http.MethodPost:
+		s.HandlerSeedPOST(w, r)
+	default:
+		w.Header().Set("Allow", "GET, POST")
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func (s *Server) HandlerSeedPOST(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "POST only", http.StatusMethodNotAllowed)
 		return
 	}
+
 	// Auth
 	if r.Header.Get("Authorization") != os.Getenv(utils.TOKEN_ENV) {
 		http.Error(w, "unauthorized", http.StatusUnauthorized)
@@ -58,4 +75,27 @@ func (s *Server) HandlerSeed(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write([]byte(`{"ok":true}`))
+}
+
+func (s *Server) HandlerSeedGET(w http.ResponseWriter, r *http.Request) {
+	rows, err := s.DB.Query(`SELECT name, unit_cost, unit_store, unit FROM items ORDER BY name`)
+	if err != nil {
+		http.Error(w, "db error", http.StatusInternalServerError)
+		log.Println("Server not able to query from database")
+		return
+	}
+	defer rows.Close()
+
+	var list []utils.ItemDTO
+	for rows.Next() {
+		var it utils.ItemDTO
+		if err := rows.Scan(&it.Item, &it.UnitCost, &it.UnitStore, &it.Unit); err != nil {
+			http.Error(w, "db error", http.StatusInternalServerError)
+			return
+		}
+		list = append(list, it)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "no-store")
+	_ = json.NewEncoder(w).Encode(list)
 }
