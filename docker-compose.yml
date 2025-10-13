@@ -1,0 +1,17 @@
+services:
+  bakery:
+    build: .
+    container_name: bakery
+    environment:
+      - BAKERY_TOKEN=${BAKERY_TOKEN:-supersecret}
+      - DB_FILE=/app/data/bakes.db
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data         # <— DB persists on the Pi
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

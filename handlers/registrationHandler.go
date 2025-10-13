@@ -29,6 +29,8 @@ func (s *Server) HandlePostBakery(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "server misconfigured: missing token", http.StatusInternalServerError)
 		return
 	}
+	log.Println(br) // todo remove
+
 	if br.Token != expected {
 		http.Error(w, "unauthorized", http.StatusUnauthorized)
 		return

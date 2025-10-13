@@ -4,7 +4,7 @@ package utils
 const (
 	DBFILE    = "bakes.db"
 	PORT      = ":8080"
-	ADDR      = "localhost" + PORT // TODO change when deploying
+	ADDR      = "127.0.0.1" + PORT // TODO change when deploying
 	TOKEN_ENV = "BAKERY_TOKEN"     // Environmental variable
 	// TODO Set ENV variable with "export BAKERY_TOKEN='supersecret'
 )

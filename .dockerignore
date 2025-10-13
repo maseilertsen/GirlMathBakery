@@ -1,0 +1,9 @@
+.git
+.idea
+.vscode
+.DS_Store
+*.log
+*.tmp
+# local db / artifacts
+bakes.db
+data/
