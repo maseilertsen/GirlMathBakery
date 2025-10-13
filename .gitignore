@@ -24,3 +24,6 @@ vendor/
 
 # Local DB / data files
 *.db
+
+# Other
+todo.md
