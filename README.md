@@ -1,6 +1,6 @@
 # GirlMathBakery
 ## Background
-This is what happens when you give in to your absolutely fantastic girlfrien
+This is what happens when you give in to your absolutely fantastic girlfriend
 
 The core concept is that we've bought a kitchen machine, and use girl-math,
 > "Just think about how much money we'll save!" - enthusiastic Girlfriend.
