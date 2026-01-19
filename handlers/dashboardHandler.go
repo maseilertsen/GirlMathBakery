@@ -26,6 +26,7 @@ func (s *Server) HandleDashboard(w http.ResponseWriter, r *http.Request) {
 		Qty  int
 	}
 	var totals struct{ Make, Store, Savings float64 }
+	var machineCost = 3000
 
 	// Compute totals
 	utils.Must(s.DB.QueryRow(`
@@ -35,7 +36,7 @@ func (s *Server) HandleDashboard(w http.ResponseWriter, r *http.Request) {
 			FROM bakes b
 			LEFT JOIN items i ON b.item_name = i.name
 		`).Scan(&totals.Make, &totals.Store))
-	totals.Savings = totals.Store - totals.Make
+	totals.Savings = totals.Store - totals.Make - float64(machineCost)
 
 	// Per item
 	rows, err := s.DB.Query(`
