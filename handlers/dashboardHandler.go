@@ -80,10 +80,20 @@ func (s *Server) HandleDashboard(w http.ResponseWriter, r *http.Request) {
 		last = append(last, rr)
 	}
 
+	// Calculate payoff progress: 0% at -3000, 100% at 0
+	payoffProgress := ((totals.Savings + float64(machineCost)) / float64(machineCost)) * 100
+	if payoffProgress < 0 {
+		payoffProgress = 0
+	} else if payoffProgress > 100 {
+		payoffProgress = 100
+	}
+
 	data := map[string]any{
-		"Totals":  totals,
-		"PerItem": per,
-		"Recent":  last,
+		"Totals":         totals,
+		"PerItem":        per,
+		"Recent":         last,
+		"MachineCost":    machineCost,
+		"PayoffProgress": payoffProgress,
 	}
 	tplPath := filepath.Join("templates", "dashboard.html")
 	tpl, err := template.ParseFiles(tplPath)

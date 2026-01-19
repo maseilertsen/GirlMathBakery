@@ -9,13 +9,22 @@
   table{width:100%;border-collapse:collapse;margin-top:1rem}
   th,td{border-bottom:1px solid #eee;padding:.6rem;text-align:left}
   .ok{color:#0a7a0a;font-weight:700}
+  .negative{color:#d32f2f;font-weight:700}
+  .progress-container{background:#eee;border-radius:8px;height:20px;margin-top:0.5rem;overflow:hidden}
+  .progress-bar{background:linear-gradient(90deg,#4caf50,#8bc34a);height:100%;transition:width 0.3s}
+  .progress-label{font-size:0.85rem;color:#666;margin-top:0.3rem}
 </style>
 </head><body>
 <h1>"Girl Math Bakery"</h1>
 <div class="cards">
   <div class="card"><h3>Cost if Bought</h3><div>{{printf "%.2f" .Totals.Store}} NOK</div></div>
   <div class="card"><h3>Cost to Make</h3><div>{{printf "%.2f" .Totals.Make}} NOK</div></div>
-  <div class="card"><h3>Total Saved</h3><div class="ok">{{printf "%.2f" .Totals.Savings}} NOK</div></div>
+  <div class="card">
+    <h3>Total Saved</h3>
+    <div class="{{if lt .Totals.Savings 0.0}}negative{{else}}ok{{end}}">{{printf "%.2f" .Totals.Savings}} NOK</div>
+    <div class="progress-container"><div class="progress-bar" style="width:{{printf "%.1f" .PayoffProgress}}%"></div></div>
+    <div class="progress-label">Machine payoff: {{printf "%.1f" .PayoffProgress}}%</div>
+  </div>
 </div>
 
 <h2>By Item</h2>
